@@ -1,39 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Web_API_Simple_Digital_Wallet.Models;
+using Web_API_Simple_Digital_Wallet.Data;
 
-namespace Web_API_Simple_Digital_Wallet.Data
+
+namespace Web_API_Simple_Digital_Wallet.Repositories
 {
     public class UserRepository
     {
-        private readonly DigitalWalletContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserRepository(DigitalWalletContext context)
+        public UserRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public User GetUserByAddress(string address)
+        public async Task<User?> GetUserByAddressAsync(string address)
         {
-            return _context.Users.SingleOrDefault(u => u.Address == address);
+            return await _context.Users
+                .Include(u => u.SentTransactions)
+                .Include(u => u.ReceivedTransactions)
+                .FirstOrDefaultAsync(u => u.Address == address);
         }
 
-        public void AddUser(User user)
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task AddUserAsync(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUserAsync(User user)
         {
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public bool UserExists(string address)
+        public async Task DeleteUserAsync(string address)
         {
-            return _context.Users.Any(u => u.Address == address);
+            var user = await GetUserByAddressAsync(address);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

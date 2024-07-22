@@ -1,22 +1,22 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_API_Simple_Digital_Wallet.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        [Key]
+        public string Address { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public double Balance { get; set; }
         public string Password { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public int PhoneNumber { get; set; }
-        public bool IsAdmin { get; set; } = false;
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; }
         public bool IsActive { get; set; } = true;
 
-        public ICollection<Transaction>? SentTransactions { get; set; }
-        public ICollection<Transaction>? ReceivedTransactions { get; set; }
+        // Navigation properties
+        public ICollection<Transaction> SentTransactions { get; set; } = new List<Transaction>();
+        public ICollection<Transaction> ReceivedTransactions { get; set; } = new List<Transaction>();
     }
 }
