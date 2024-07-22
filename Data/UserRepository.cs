@@ -24,7 +24,13 @@ namespace Web_API_Simple_Digital_Wallet.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Select(u => new User
+            {
+            Address = u.Address,
+            Name = u.Name,
+            Balance = u.Balance,
+            Email = u.Email
+            }).ToListAsync();
         }
 
         public async Task AddUserAsync(User user)
@@ -33,11 +39,22 @@ namespace Web_API_Simple_Digital_Wallet.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User updatedUser)
         {
-            _context.Users.Update(user);
+            var existingUser = await _context.Users.FindAsync(updatedUser.Address);
+            if (existingUser == null)
+            {
+                throw new ArgumentException("User not found.");
+            }
+
+            existingUser.Name = updatedUser.Name;
+            existingUser.Password = updatedUser.Password;
+            existingUser.Email = updatedUser.Email;
+            existingUser.PhoneNumber = updatedUser.PhoneNumber;
+
             await _context.SaveChangesAsync();
         }
+
 
         public async Task DeleteUserAsync(string address)
         {

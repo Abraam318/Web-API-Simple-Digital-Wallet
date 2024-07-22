@@ -61,11 +61,10 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("Balance")
+                    b.Property<double?>("Balance")
                         .HasColumnType("float");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -75,7 +74,6 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -83,7 +81,6 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Address");
