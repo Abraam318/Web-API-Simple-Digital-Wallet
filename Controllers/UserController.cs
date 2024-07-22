@@ -130,7 +130,7 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
             return Ok(true);
         }
 
-        [HttpPost("deposit")]
+        [HttpPut("deposit")]
         public async Task<ActionResult> Deposit([FromQuery]string address, [FromBody]double amount )
         {
             var success = await _userService.DepositAsync(address, amount);
@@ -139,10 +139,10 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
             return Ok(true);
         }
 
-        [HttpPost("withdraw")]
-        public async Task<ActionResult> Withdraw([FromBody] TransactionRequestDto transactionRequestDto)
+        [HttpPut("withdraw")]
+        public async Task<ActionResult> Withdraw([FromQuery]string address, [FromBody]double amount)
         {
-            var success = await _userService.WithdrawAsync(transactionRequestDto.ReceiverAddress, transactionRequestDto.Amount);
+            var success = await _userService.WithdrawAsync(address, amount);
             if (!success)
                 return BadRequest("Withdrawal failed.");
             return Ok(true);

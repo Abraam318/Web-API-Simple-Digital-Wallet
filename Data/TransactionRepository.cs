@@ -24,8 +24,6 @@ namespace Web_API_Simple_Digital_Wallet.Repositories
         public async Task<Transaction?> GetTransactionByIdAsync(int id)
         {
             return await _context.Transactions
-                .Include(t => t.Sender)
-                .Include(t => t.Receiver)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 

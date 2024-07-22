@@ -6,17 +6,12 @@ using Web_API_Simple_Digital_Wallet.Models;
 
 namespace Web_API_Simple_Digital_Wallet.Dtos.Transaction
 {
-    public class GetTransaction
+    public class AddtransDto
     {
-
-        public int? Id { get; set; }
-
         public string? SAddress { get; set; } = string.Empty;
         public string? RAddress { get; set; } = string.Empty;
 
         public double? Amount { get; set; }
         public TransactionType? Type { get; set; }
-        public DateTime? Timestamp { get; set; }
-
     }
 }

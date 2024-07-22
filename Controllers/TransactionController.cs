@@ -39,6 +39,7 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
         public async Task<ActionResult<Transaction>> GetTransactionById(int id)
         {
             var trans = await _transactionService.GetTransactionByIdAsync(id);
+
             if (trans == null)
                 return NotFound();
 
@@ -49,20 +50,34 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
                 Amount = trans.Amount,
                 Type = trans.Type,
                 Timestamp = trans.Timestamp
-            };
+            }; 
+
             return Ok(modifiedTrans);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTransaction([FromBody] Transaction transaction)
+        public async Task<ActionResult> AddTransaction([FromBody] AddtransDto transDto)
         {
+            var transaction = new Transaction{
+                SAddress = transDto.SAddress,
+                RAddress = transDto.RAddress,
+                Amount = transDto.Amount,
+                Type = transDto.Type
+            };
             await _transactionService.AddTransactionAsync(transaction);
             return CreatedAtAction(nameof(GetTransactionById), new { id = transaction.Id }, transaction);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTransaction(int id, [FromBody] Transaction transaction)
+        public async Task<ActionResult> UpdateTransaction(int id, [FromBody] AddtransDto transDto)
         {
+            var transaction = new Transaction{
+                SAddress = transDto.SAddress,
+                RAddress = transDto.RAddress,
+                Amount = transDto.Amount,
+                Type = transDto.Type
+            };
+
             if (id != transaction.Id)
                 return BadRequest();
 
