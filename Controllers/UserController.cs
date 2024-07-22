@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Web_API_Simple_Digital_Wallet.Models;
 using Web_API_Simple_Digital_Wallet.Services;
 using Web_API_Simple_Digital_Wallet.DTOs;
+using Web_API_Simple_Digital_Wallet.Dtos;
 
 namespace Web_API_Simple_Digital_Wallet.Controllers
 {
@@ -22,7 +23,16 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
-            return Ok(users);
+            var getDataDto = users.Select( User => new GetDataDto
+            {
+                Name = User.Name,
+                Address = User.Address,
+                PhoneNumber = User.PhoneNumber,
+                Email = User.Email,
+                Balance = User.Balance
+            }).ToList();
+
+            return Ok(getDataDto);
         }
 
         [HttpGet("{address}")]
@@ -31,7 +41,14 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
             var user = await _userService.GetUserByAddressAsync(address);
             if (user == null)
                 return NotFound();
-            return Ok(user);
+
+            var getDataDto = new GetDataDto  {
+                Name = user.Name,
+                Address = user.Address,
+                Email = user.Email,
+                Balance = user.Balance
+            };
+            return Ok(getDataDto);
         }
 
         [HttpPost("login")]
