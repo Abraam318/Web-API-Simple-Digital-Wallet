@@ -131,9 +131,9 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
         }
 
         [HttpPost("deposit")]
-        public async Task<ActionResult> Deposit([FromBody] TransactionRequestDto transactionRequestDto)
+        public async Task<ActionResult> Deposit([FromQuery]string address, [FromBody]double amount )
         {
-            var success = await _userService.DepositAsync(transactionRequestDto.ReceiverAddress, transactionRequestDto.Amount);
+            var success = await _userService.DepositAsync(address, amount);
             if (!success)
                 return BadRequest("Deposit failed.");
             return Ok(true);

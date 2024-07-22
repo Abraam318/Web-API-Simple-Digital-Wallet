@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Web_API_Simple_Digital_Wallet.Dtos.Transaction;
 using Web_API_Simple_Digital_Wallet.Models;
 using Web_API_Simple_Digital_Wallet.Services;
 
@@ -22,16 +23,34 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
         public async Task<ActionResult<IEnumerable<Transaction>>> GetAllTransactions()
         {
             var transactions = await _transactionService.GetAllTransactionsAsync();
-            return Ok(transactions);
+            var modifiedTrans =  transactions.Select(trans => new GetTransaction
+            {
+                Id = trans.Id,
+                SAddress = trans.SAddress,
+                RAddress = trans.RAddress,
+                Amount = trans.Amount,
+                Type = trans.Type,
+                Timestamp = trans.Timestamp
+            }).ToList();
+            return Ok(modifiedTrans);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Transaction>> GetTransactionById(int id)
         {
-            var transaction = await _transactionService.GetTransactionByIdAsync(id);
-            if (transaction == null)
+            var trans = await _transactionService.GetTransactionByIdAsync(id);
+            if (trans == null)
                 return NotFound();
-            return Ok(transaction);
+
+            var modifiedTrans = new GetTransaction{
+                Id = trans.Id,
+                SAddress = trans.SAddress,
+                RAddress = trans.RAddress,
+                Amount = trans.Amount,
+                Type = trans.Type,
+                Timestamp = trans.Timestamp
+            };
+            return Ok(modifiedTrans);
         }
 
         [HttpPost]

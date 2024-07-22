@@ -12,8 +12,8 @@ using Web_API_Simple_Digital_Wallet.Data;
 namespace Web_API_Simple_Digital_Wallet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240722151036_init")]
-    partial class init
+    [Migration("20240722190005_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,11 +50,21 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserAddress")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserAddress1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RAddress");
 
                     b.HasIndex("SAddress");
+
+                    b.HasIndex("UserAddress");
+
+                    b.HasIndex("UserAddress1");
 
                     b.ToTable("Transactions");
                 });
@@ -94,16 +104,24 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
             modelBuilder.Entity("Web_API_Simple_Digital_Wallet.Models.Transaction", b =>
                 {
                     b.HasOne("Web_API_Simple_Digital_Wallet.Models.User", "Receiver")
-                        .WithMany("ReceivedTransactions")
+                        .WithMany()
                         .HasForeignKey("RAddress")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Web_API_Simple_Digital_Wallet.Models.User", "Sender")
-                        .WithMany("SentTransactions")
+                        .WithMany()
                         .HasForeignKey("SAddress")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Web_API_Simple_Digital_Wallet.Models.User", null)
+                        .WithMany("ReceivedTransactions")
+                        .HasForeignKey("UserAddress");
+
+                    b.HasOne("Web_API_Simple_Digital_Wallet.Models.User", null)
+                        .WithMany("SentTransactions")
+                        .HasForeignKey("UserAddress1");
 
                     b.Navigation("Receiver");
 

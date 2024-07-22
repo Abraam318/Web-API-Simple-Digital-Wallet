@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Web_API_Simple_Digital_Wallet.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,7 +39,9 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                     RAddress = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserAddress = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserAddress1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,6 +58,16 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                         principalTable: "Users",
                         principalColumn: "Address",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Users_UserAddress",
+                        column: x => x.UserAddress,
+                        principalTable: "Users",
+                        principalColumn: "Address");
+                    table.ForeignKey(
+                        name: "FK_Transactions_Users_UserAddress1",
+                        column: x => x.UserAddress1,
+                        principalTable: "Users",
+                        principalColumn: "Address");
                 });
 
             migrationBuilder.CreateIndex(
@@ -67,6 +79,16 @@ namespace Web_API_Simple_Digital_Wallet.Migrations
                 name: "IX_Transactions_SAddress",
                 table: "Transactions",
                 column: "SAddress");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_UserAddress",
+                table: "Transactions",
+                column: "UserAddress");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_UserAddress1",
+                table: "Transactions",
+                column: "UserAddress1");
         }
 
         /// <inheritdoc />
