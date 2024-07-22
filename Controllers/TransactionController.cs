@@ -9,11 +9,14 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly TransactionService _transactionService;
+        private readonly UserService _userService;
 
-        public TransactionController(TransactionService transactionService)
+        public TransactionController(TransactionService transactionService, UserService userService)
         {
             _transactionService = transactionService;
+            _userService = userService;
         }
+    
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetAllTransactions()
@@ -55,49 +58,5 @@ namespace Web_API_Simple_Digital_Wallet.Controllers
             return NoContent();
         }
 
-        [HttpPost("send")]
-        public async Task<ActionResult<bool>> SendMoney(string senderAddress, string receiverAddress, double amount)
-        {
-            var success = await _transactionService.SendMoneyAsync(senderAddress, receiverAddress, amount);
-            if (!success)
-                return BadRequest("Transaction failed.");
-            return Ok(true);
-        }
-
-        [HttpPost("receive")]
-        public async Task<ActionResult<bool>> ReceiveMoney(string senderAddress, string receiverAddress, double amount)
-        {
-            var success = await _transactionService.ReceiveMoneyAsync(senderAddress, receiverAddress, amount);
-            if (!success)
-                return BadRequest("Transaction failed.");
-            return Ok(true);
-        }
-
-        [HttpPost("request")]
-        public async Task<ActionResult<bool>> RequestMoney(string senderAddress, string receiverAddress, double amount)
-        {
-            var success = await _transactionService.RequestMoneyAsync(senderAddress, receiverAddress, amount);
-            if (!success)
-                return BadRequest("Request failed.");
-            return Ok(true);
-        }
-
-        [HttpPost("deposit")]
-        public async Task<ActionResult<bool>> Deposit(string userAddress, double amount)
-        {
-            var success = await _transactionService.DepositAsync(userAddress, amount);
-            if (!success)
-                return BadRequest("Deposit failed.");
-            return Ok(true);
-        }
-
-        [HttpPost("withdraw")]
-        public async Task<ActionResult<bool>> Withdraw(string userAddress, double amount)
-        {
-            var success = await _transactionService.WithdrawAsync(userAddress, amount);
-            if (!success)
-                return BadRequest("Withdrawal failed.");
-            return Ok(true);
-        }
     }
 }
