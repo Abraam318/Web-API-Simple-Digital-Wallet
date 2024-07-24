@@ -34,7 +34,6 @@ In this schema, users are stored in the **Users** table with attributes like add
 
 ## API Endpoints
 
-![User Endpoints](user_endpoints.png)
 
 ### User Endpoints
 - `GET /api/user` - Retrieve all users (excluding passwords)
@@ -44,7 +43,7 @@ In this schema, users are stored in the **Users** table with attributes like add
 - `PUT /api/user/{address}` - Update user details
 - `DELETE /api/user/{address}` - Delete a user
 
-![Transaction Endpoints](transaction_endpoints.png)
+![User Endpoints](user_endpoints.png)
 
 ### Transaction Endpoints
 - `GET /api/transaction` - Retrieve all transactions
@@ -52,6 +51,8 @@ In this schema, users are stored in the **Users** table with attributes like add
 - `POST /api/transaction` - Add a new transaction
 - `PUT /api/transaction/{id}` - Update a transaction
 - `DELETE /api/transaction/{id}` - Delete a transaction
+
+![Transaction Endpoints](transaction_endpoints.png)
 
 ### Transaction Actions
 - `POST /api/transaction/send` - Send money
