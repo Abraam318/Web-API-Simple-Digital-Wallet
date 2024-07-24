@@ -34,6 +34,8 @@ In this schema, users are stored in the **Users** table with attributes like add
 
 ## API Endpoints
 
+![User Endpoints](user_endpoints.png)
+
 ### User Endpoints
 - `GET /api/user` - Retrieve all users (excluding passwords)
 - `GET /api/user/{address}` - Retrieve a specific user by address
@@ -41,6 +43,8 @@ In this schema, users are stored in the **Users** table with attributes like add
 - `POST /api/user/login` - Login a user
 - `PUT /api/user/{address}` - Update user details
 - `DELETE /api/user/{address}` - Delete a user
+
+![Transaction Endpoints](transaction_endpoints.png)
 
 ### Transaction Endpoints
 - `GET /api/transaction` - Retrieve all transactions
@@ -84,4 +88,3 @@ To use the Simple Digital Wallet API, follow these steps:
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request.
-
