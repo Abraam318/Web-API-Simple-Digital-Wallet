@@ -1,6 +1,6 @@
 # Simple Digital Wallet API
 
-![Simple Digital Wallet](bg.jpg)
+![Web API simple digital wallet](bg.jpg)
 
 ## Table of Contents
 
@@ -37,15 +37,15 @@ In this schema, users are stored in the **Users** table with attributes like add
 ### User Endpoints
 - `GET /api/user` - Retrieve all users (excluding passwords)
 - `GET /api/user/{address}` - Retrieve a specific user by address
-- `POST /api/user/signup` - Register a new user
-- `POST /api/user/login` - Login a user
 - `PUT /api/user/{address}` - Update user details
 - `DELETE /api/user/{address}` - Delete a user
+- `POST /api/user/signup` - Register a new user
+- `POST /api/user/login` - Login a user
 - `POST /api/user/send` - Send money
 - `POST /api/user/receive` - Receive money
 - `POST /api/user/request` - Request money
-- `POST /api/user/deposit` - Deposit money
-- `POST /api/user/withdraw` - Withdraw money
+- `PUT /api/user/deposit` - Deposit money
+- `PUT /api/user/withdraw` - Withdraw money
 
 ![User Endpoints](user_endpoints.png)
 
@@ -62,11 +62,11 @@ In this schema, users are stored in the **Users** table with attributes like add
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Abraam318/simple-digital-wallet.git
+    git clone https://github.com/Abraam318/Web-API-simple-digital-wallet.git
     ```
 2. Navigate to the project directory:
     ```bash
-    cd simple-digital-wallet
+    cd Web-API-simple-digital-wallet
     ```
 3. Restore dependencies and run the project:
     ```bash
