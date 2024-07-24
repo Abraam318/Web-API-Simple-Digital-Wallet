@@ -1,6 +1,6 @@
 # Simple Digital Wallet API
 
-![Web API simple digital wallet](bg.jpg)
+![Web API simple digital wallet](bg.png)
 
 ## Table of Contents
 
